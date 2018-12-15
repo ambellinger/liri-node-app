@@ -31,13 +31,14 @@ var search = process.argv.slice(3).join(" ");
 ///////COMMANDS/////////
 //Bands in Town - concert-this
 
-// We then run the request with axios module on a URL with a JSON
+function concertThis() {
+    // We then run the request with axios module on a URL with a JSON
 axios.get(`https://rest.bandsintown.com/artists/${search}/events?app_id=codingbootcamp&date=upcoming`).then(
     function (response) {
         // Then we print out the result
-        if (commands == "concert-this") {
 
             for (i=0; i < 5; i++) {
+                console.log("---------------------------------")
                 console.log("Artist: " + search)
                 //venue
                 console.log("Venue name: " + response.data[i].venue.name);
@@ -48,17 +49,16 @@ axios.get(`https://rest.bandsintown.com/artists/${search}/events?app_id=codingbo
                 //date of the event
                 console.log("Date: " + moment(response.data[i].datetime).format('MM/DD/YYYY')) 
                 //console.log("Event time " + response.data[i].datetime)
-
-                console.log("##################")
-            }
-
-           
-        }
-
+                console.log("---------------------------------")
+            }   
     });
+}
+
+
+
+
 
 //OMDB API - movie-this
-if (commands == "movie-this") {
     function movieThis() {
         var movieUrl = `http://www.omdbapi.com/?t=${search}&y=&plot=short&apikey=trilogy`;
 
@@ -77,19 +77,11 @@ if (commands == "movie-this") {
             })
 
         } 
-                 if (search.trim().length === 0) {
-                     search = "mr+nobody";
-                     movieThis();
-                 } else {
-                     movieThis();
-                 }
-            }
+                 
+            
 
 
 //Spotify 
-
-if (commands == "spotify-this-song") {
-
     function spotifyThisSong() {
 
         spotify.search({ type: 'track', query: search }, function (err, data) {
@@ -104,15 +96,10 @@ if (commands == "spotify-this-song") {
         });
     }
 
-    if (search.trim().length === 0) {
-        search = "The Sign Ace of Base";
-        spotifyThisSong();
-    } else {
-        spotifyThisSong();
-    }
-};
+   
 
-if (commands == "do-what-it-says") {
+
+function doWhatItSays(){
     fs.readFile("random.txt", "utf8", function (error, data) {
         if (error) {
             return console.log(error);
@@ -139,9 +126,40 @@ if (commands == "do-what-it-says") {
 
             });
         }
-
-        spotifyThisSong();
+        spotifyThisSong()    
     }
-    )
-}
+    )}
 
+
+
+
+
+
+//Switch Statements Down here
+switch(commands)
+{
+    case "concert-this":
+    concertThis();
+    break;
+    case "movie-this":
+    if (search.trim().length === 0) {
+        search = "mr+nobody";
+        movieThis();
+    } else {
+        movieThis();
+    };
+    break;
+    case "spotify-this-song":
+    if (search.trim().length === 0) {
+        search = "The Sign Ace of Base";
+        spotifyThisSong();
+    } else {
+        spotifyThisSong();
+    };
+    break;
+    case "do-what-it-says":
+    doWhatItSays()
+    break;
+
+
+}
