@@ -1,25 +1,34 @@
+//SPOTIFY REQUIREMENTS
+//Link the dotenv so that you can link in the spotify keys
 require("dotenv").config();
-
+//import keys and save them into the keys pointer
 var keys = require("./keys.js");
+//import the spotify node documentation
+const Spotify = require("node-spotify-api");
+//run the keys thru the spotify constructor and save to a pointer
+var spotify = new Spotify(keys.spotify);
 
+//BANDS IN TOWN & OMDB REQUIREMENTS
+//Connect to API
+const axios = require("axios");
+//moment,js
+const moment = require("moment");
+
+
+//LINK UP FS NODE FOR DO WHAT IT SAYS FUNCTION
 //Fs node package
 const fs = require("fs");
 
-//Spotify 
-const Spotify = require("node-spotify-api");
-var spotify = new Spotify(keys.spotify);
 
+//USER INPUT
 //Create variables to take in the commands
 var commands = process.argv[2];
-//Connect to API
-const axios = require("axios");
-
-//moment,js
-//const moment = require("moment");
-
 //Create if or else statement that will do the different commands 
 var search = process.argv.slice(3).join(" ");
 
+
+
+///////COMMANDS/////////
 //Bands in Town - concert-this
 
 // We then run the request with axios module on a URL with a JSON
@@ -29,23 +38,21 @@ axios.get(`https://rest.bandsintown.com/artists/${search}/events?app_id=codingbo
         if (commands == "concert-this") {
 
             for (i=0; i < 5; i++) {
-                console.log("Artist " + search)
+                console.log("Artist: " + search)
                 //venue
-                console.log("Venue name " + response.data[i].venue.name);
+                console.log("Venue name: " + response.data[i].venue.name);
 
                 //venue location
-                console.log("Location " + response.data[i].venue.city)
+                console.log("Location: " + response.data[i].venue.city)
 
                 //date of the event
-                console.log("Event time " + response.data[i].datetime)
+                console.log("Date: " + moment(response.data[i].datetime).format('MM/DD/YYYY')) 
+                //console.log("Event time " + response.data[i].datetime)
 
                 console.log("##################")
             }
 
-            if (search.trim().length === 0) {
-                var search = "One";
-
-            }
+           
         }
 
     });
