@@ -32,11 +32,11 @@ var search = process.argv.slice(3).join(" ");
 //Bands in Town - concert-this
 
 function concertThis() {
-    // We then run the request with axios module on a URL with a JSON
+    //Axios Request 
 axios.get(`https://rest.bandsintown.com/artists/${search}/events?app_id=codingbootcamp&date=upcoming`).then(
     function (response) {
-        // Then we print out the result
-
+        
+        //For loop to limit the results to 5
             for (i=0; i < 5; i++) {
                 console.log("---------------------------------")
                 console.log("Artist: " + search)
@@ -48,7 +48,7 @@ axios.get(`https://rest.bandsintown.com/artists/${search}/events?app_id=codingbo
 
                 //date of the event
                 console.log("Date: " + moment(response.data[i].datetime).format('MM/DD/YYYY')) 
-                //console.log("Event time " + response.data[i].datetime)
+                
                 console.log("---------------------------------")
             }   
     });
@@ -60,19 +60,20 @@ axios.get(`https://rest.bandsintown.com/artists/${search}/events?app_id=codingbo
 
 //OMDB API - movie-this
     function movieThis() {
+        //API call saved into movieURL variable
         var movieUrl = `http://www.omdbapi.com/?t=${search}&y=&plot=short&apikey=trilogy`;
-
+        //Axios Request
         axios.get(movieUrl).then(
             function (response) {
 
-                console.log("The title of the movie is " + response.data.Title);
-                console.log("Year the movie came out " + response.data.Year);
-                console.log("IMDB Rating of the movie is " + response.data.imdbRating);
-                console.log("Rotten Tomatoes Rating of the movie is " + response.data.Ratings[1].value);
-                console.log("Country where the movie was produced " + response.data.Country);
-                console.log("Language " + response.data.Language);
-                console.log("Plot of the movie " + response.data.Plot);
-                console.log("Actors are " + response.data.Actors);
+                console.log("The title of the movie is:  " + response.data.Title);
+                console.log("Year the movie came out:  " + response.data.Year);
+                console.log("IMDB Rating of the movie is: " + response.data.imdbRating);
+                console.log("Rotten Tomatoes Rating of the movie is: " + response.data.Ratings[1].value);
+                console.log("Country where the movie was produced: " + response.data.Country);
+                console.log("Language: " + response.data.Language);
+                console.log("Plot of the movie: " + response.data.Plot);
+                console.log("Actors are: " + response.data.Actors);
 
             })
 
@@ -83,7 +84,8 @@ axios.get(`https://rest.bandsintown.com/artists/${search}/events?app_id=codingbo
 
 //Spotify 
     function spotifyThisSong() {
-
+        //Spotify API found via Spotify API documentation
+        //Query was changed to match the variable search
         spotify.search({ type: 'track', query: search }, function (err, data) {
             if (err) {
                 return console.log('Error occurred: ' + err);
@@ -98,23 +100,27 @@ axios.get(`https://rest.bandsintown.com/artists/${search}/events?app_id=codingbo
 
    
 
-
+//Do what it says function
 function doWhatItSays(){
     fs.readFile("random.txt", "utf8", function (error, data) {
         if (error) {
             return console.log(error);
         }
-        // We will then print the contents of data
-        console.log(data);
+        // Printing the contents of the data, Do not delete commented out code in case of future issues
+        //console.log(data);
 
-        // Then split it by commas (to make it more readable)
+        // Split the data and save it to an array
         let dataArr = data.split(",");
 
+        //Commented out code is saved for future attempt at expanding the use of this function
         // We will then re-display the content as an array for later use.
-        console.log(dataArr[1]);
-
+        //console.log(dataArr[1]);
+        //var commands = dataArr[0];
+        //console.log("The Command is " + commands);
+       // var search = dataArr[1];
+        
         function spotifyThisSong() {
-
+            //Spotify API. Query is changed to dataArr[1] so that only the name of the song gets searched
             spotify.search({ type: 'track', query: dataArr[1] }, function (err, data) {
                 if (err) {
                     return console.log('Error occurred: ' + err);
@@ -126,7 +132,10 @@ function doWhatItSays(){
 
             });
         }
-        spotifyThisSong()    
+        //Calling the function
+        spotifyThisSong();
+  
+       
     }
     )}
 
@@ -142,6 +151,7 @@ switch(commands)
     concertThis();
     break;
     case "movie-this":
+    //If statements for placeholder results in the event a user doesn't select a movie
     if (search.trim().length === 0) {
         search = "mr+nobody";
         movieThis();
@@ -150,6 +160,7 @@ switch(commands)
     };
     break;
     case "spotify-this-song":
+    //If statements for placeholder results in the event a user doesn't select a movie
     if (search.trim().length === 0) {
         search = "The Sign Ace of Base";
         spotifyThisSong();
@@ -160,6 +171,11 @@ switch(commands)
     case "do-what-it-says":
     doWhatItSays()
     break;
-
-
 }
+
+//Issues Remaining
+//Do-What-It-Says should be able to take the data and call certain functions. DataArr[0] has the name
+//of the call (i.e movie this) and DataArr[1] has the name of the movie etc. An if/else or switch statement
+//may be needed to call the functions, i.g (if DataArr[0] === "movie this" then run the movieThis() function)\
+//However two issues remain, a switch statement wiwth a call to the function isn't working nor is plugging the code
+//straight out.
