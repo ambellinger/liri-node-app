@@ -1,5 +1,5 @@
 # Liri
-Liri operates as a command line version of siri. "She" takes in commands and utilizes API's to return information. Currently Liri is equiped with basic OMDB (movies), Bands in Town, and Spotify information.
+Liri operates as a command line version of siri. "She" takes in commands and utilizes APIs to return information. Currently Liri is equiped with basic OMDB (movies), Bands in Town, and Spotify information.
 
 ## Technologies Used
 * Javascript
@@ -30,7 +30,7 @@ var search = process.argv.slice(3).join(" ");
 
 ```
 
-A switch statement is used to take the command given by the user and to run a function. In some cases, if no search information is written after the command, a placeholder search is run instead.
+A switch statement uses the command given by the user to run a function. In some cases, if no search information is written after the command, a placeholder search is run instead.
 
 ```
 switch(commands)
@@ -85,17 +85,17 @@ Once a command is given, the function is run and an API call utilizing axios is 
 ![spotify-this-song=placeholder](images/liri-spotify-this-song-image-placeholder.PNG)
 
 ### Results - do-what-it-says
-For the function do what it says, it takes text written in the random.txt file and plugs it into the Spotify function
+For the command "do-what-it-says", text written in the random.txt file is plugged into the Spotify function.
 
 ![do-what-it-says](images/liri-do-what-it-says.PNG)
 
 
 ## Challenges and Future Improvements
-There were many challenges creating this individual project, particularlly working with the Spotify documentation. It was difficult understanding exactly what was needed to get it to run.
+There were many challenges creating this project, particularlly working with the Spotify documentation. It was difficult understanding exactly what was needed to get it to run.
 
 One challenge that remains to be solved is expanding the capabilies of the do-what-it-says function. As of right now, it is only recognizes the spotify-this-song command. I believe an if/else or switch statement will be necessary (the possible hows and what has already been tried can be found at the bottom of liri.js)
 
 Commented out code that hasn't been deleted has been saved for this particular reason.
 
 ## Acknowlegments 
-Although this is merely an assignment, I want to acknowledge the help I recieved from the TAs and from my fellow students especially Jenina who helped me understand the spotify API. :sparkles:
+Although this is merely a homework assignment, I want to acknowledge the help I recieved from the TAs and from my fellow students especially Jenina who helped me understand the spotify API. :sparkles:
